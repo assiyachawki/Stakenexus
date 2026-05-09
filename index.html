@@ -784,15 +784,15 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
     <div class="contact-form-wrap reveal">
       <div class="contact-form-title">Demander une Démo</div>
       <div class="contact-form-sub">Remplissez ce formulaire et nous revenons vers vous sous 24h avec une proposition personnalisée.</div>
-      <form id="contact-form" onsubmit="handleSubmit(event)">
+      <form id="contact-form" action="https://formspree.io/f/xeenpapq" method="POST" onsubmit="handleSubmit(event)">
         <label class="form-label">Nom complet *</label>
-        <input type="text" class="form-input" placeholder="Dr. Ahmed Benali" required>
+        <input type="text" name="nom" class="form-input" placeholder="Dr. Ahmed Benali" required>
         <label class="form-label">Email professionnel *</label>
-        <input type="email" class="form-input" placeholder="ahmed.benali@organisation.ma" required>
+        <input type="email" name="email" class="form-input" placeholder="ahmed.benali@organisation.ma" required>
         <label class="form-label">Organisation *</label>
-        <input type="text" class="form-input" placeholder="OCP Group, Attijariwafa Bank..." required>
+        <input type="text" name="organisation" class="form-input" placeholder="OCP Group, Attijariwafa Bank..." required>
         <label class="form-label">Type de demande</label>
-        <select class="form-select">
+        <select name="type_demande" class="form-select">
           <option value="">Choisir...</option>
           <option>Démo gratuite</option>
           <option>Devis personnalisé</option>
@@ -800,7 +800,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
           <option>Question technique</option>
         </select>
         <label class="form-label">Message</label>
-        <textarea class="form-textarea" placeholder="Décrivez votre besoin, la taille de votre ecosysteme..."></textarea>
+        <textarea name="message" class="form-textarea" placeholder="Décrivez votre besoin, la taille de votre ecosysteme..."></textarea>
         <button type="submit" class="form-submit">Envoyer la Demande →</button>
         <div class="form-success" id="form-success">✓ Message envoyé ! Nous revenons vers vous sous 24h.</div>
       </form>
@@ -996,13 +996,26 @@ function handleSubmit(e) {
   const btn = form.querySelector('.form-submit');
   btn.textContent = 'Envoi en cours...';
   btn.disabled = true;
-  setTimeout(() => {
-    form.reset();
-    btn.textContent = 'Envoyer la Demande →';
+  const data = new FormData(form);
+  fetch('https://formspree.io/f/xeenpapq', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      form.reset();
+      success.style.display = 'block';
+      btn.textContent = 'Envoyer la Demande →';
+      btn.disabled = false;
+      setTimeout(() => success.style.display = 'none', 6000);
+    } else {
+      btn.textContent = 'Erreur — Réessayer';
+      btn.disabled = false;
+    }
+  }).catch(() => {
+    btn.textContent = 'Erreur — Réessayer';
     btn.disabled = false;
-    success.style.display = 'block';
-    setTimeout(() => success.style.display = 'none', 5000);
-  }, 1200);
+  });
 }
 
 function revealTestimony(card) {
