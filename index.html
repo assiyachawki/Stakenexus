@@ -407,6 +407,31 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
   }
   .pricing-modal { position: relative; }
 
+  
+  /* ── PERSONA SELECTOR ── */
+  .persona-btn {
+    padding: 9px 20px;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--gray);
+    font-family: Outfit, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .persona-btn:hover { border-color: var(--purple); color: var(--white); }
+  .persona-btn.active {
+    background: var(--purple);
+    border-color: var(--purple);
+    color: white;
+    box-shadow: 0 4px 14px rgba(124,58,237,0.3);
+  }
+  .persona-card { transition: opacity 0.3s, transform 0.3s; }
+  .persona-card.hidden { opacity: 0.15; transform: scale(0.97); pointer-events: none; }
+
   </style>
 </head>
 <body>
@@ -434,7 +459,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
   <div class="hero-content">
     <div class="hero-badge">1ère plateforme d'intelligence relationnelle — 100% marocaine</div>
     <h1 class="hero-title">Sécurisez<br><span class="accent">vos relations</span><br>stratégiques.</h1>
-    <p class="hero-subtitle"><strong>25% des institutions perdent des partenariats critiques</strong> par manque d'intelligence relationnelle. StakeNexus prescrit les actions exactes pour securiser vos relations strategiques — avant que les crises ne coutent des millions de dirhams.</p>
+    <p class="hero-subtitle">Vos relations stratégiques sont votre actif le plus fragile. StakeNexus est la <strong>première plateforme marocaine</strong> qui cartographie, score et prescrit les actions exactes pour sécuriser votre écosystème — avant que les crises ne coûtent des millions de dirhams.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-primary">Demander une Démo →</a>
       <a href="#solution" class="btn-secondary">Découvrir la solution</a>
@@ -445,6 +470,21 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
       <div class="stat-item"><div class="stat-val">100%</div><div class="stat-label">Souverain Maroc</div></div>
     </div>
   </div>
+
+  <!-- TRACTION BAND -->
+  <div class="traction-band reveal" style="margin-top:48px;padding:20px 28px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:14px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block;box-shadow:0 0 8px #10B981;animation:pulse 2s infinite;"></span>
+      <span style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#10B981;">Phase pilote active — 2026</span>
+    </div>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;">
+      <div><span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);">3</span> <span style="font-size:0.78rem;color:var(--gray);">organisations pilotes</span></div>
+      <div><span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);">12</span> <span style="font-size:0.78rem;color:var(--gray);">diagnostics réalisés</span></div>
+      <div><span style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--white);">100%</span> <span style="font-size:0.78rem;color:var(--gray);">hypothèses de recherche confirmées</span></div>
+    </div>
+    <a href="#contact" style="margin-left:auto;font-size:0.8rem;color:var(--green);font-weight:600;text-decoration:none;white-space:nowrap;">Rejoindre la phase pilote →</a>
+  </div>
+
 </section>
 
 <!-- PROBLEM -->
@@ -524,28 +564,35 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
 
 <section id="targets" style="padding:120px 60px; max-width:1200px; margin:0 auto;">
   <div class="section-tag reveal">Cibles prioritaires</div>
-  <h2 class="section-title reveal">Pour quels types d'organisations ?</h2>
-  <p class="section-subtitle reveal">
-    StakeNexus s'adresse aux organisations pour qui la gestion des parties prenantes 
-    est un enjeu stratégique, politique et financier majeur.
-  </p>
+  <h2 class="section-title reveal">StakeNexus parle<br><span class="accent">votre langage.</span></h2>
+  <p class="section-subtitle reveal">Sélectionnez votre profil pour voir comment StakeNexus répond à vos enjeux spécifiques.</p>
+
+  <!-- PERSONA SELECTOR -->
+  <div class="persona-selector reveal" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px;">
+    <button class="persona-btn active" onclick="filterPersona('all')" data-persona="all">Toutes les organisations</button>
+    <button class="persona-btn" onclick="filterPersona('pme')" data-persona="pme">PME &amp; ETI</button>
+    <button class="persona-btn" onclick="filterPersona('corporate')" data-persona="corporate">Grandes entreprises</button>
+    <button class="persona-btn" onclick="filterPersona('public')" data-persona="public">Institutions publiques</button>
+    <button class="persona-btn" onclick="filterPersona('academic')" data-persona="academic">Universités &amp; Écoles</button>
+    <button class="persona-btn" onclick="filterPersona('conseil')" data-persona="conseil">Cabinets de conseil</button>
+  </div>
   <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:20px; margin-top:40px;">
-    <div class="problem-card purple reveal" style="border-radius:16px; padding:28px;">
+    <div class="problem-card purple reveal persona-card" data-persona="corporate" style="border-radius:16px; padding:28px;">
       <div class="problem-stat" style="font-size:1.8rem;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M8 10h8M8 14h8M8 6h8"/></svg></div>
       <div style="font-weight:700; margin-bottom:8px; color:var(--white);">Grandes entreprises</div>
       <div class="problem-desc">OCP, Attijariwafa, CIH, BMCE, Maroc Telecom — exposés à des risques réputationnels, réglementaires ou sociaux.</div>
     </div>
-    <div class="problem-card yellow reveal" style="border-radius:16px; padding:28px;">
+    <div class="problem-card yellow reveal persona-card" data-persona="pme" style="border-radius:16px; padding:28px;">
       <div class="problem-stat" style="font-size:1.8rem;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block"><path d="M3 21h18"/><path d="M3 7l6 4V7l6 4V7l6 4v10H3V7z"/></svg></div>
       <div style="font-weight:700; margin-bottom:8px; color:var(--white);">PME &amp; ETI</div>
       <div class="problem-desc">Les petites et moyennes entreprises marocaines confrontées à des environnements relationnels complexes : fournisseurs, banques, collectivités, clients clés.</div>
     </div>
-    <div class="problem-card red reveal" style="border-radius:16px; padding:28px;">
+    <div class="problem-card red reveal persona-card" data-persona="public" style="border-radius:16px; padding:28px;">
       <div class="problem-stat" style="font-size:1.8rem;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block"><path d="M2 20h20M4 20V10M20 20V10M12 3L2 10h20L12 3z"/><rect x="8" y="14" width="3" height="6"/><rect x="13" y="14" width="3" height="6"/></svg></div>
       <div style="font-weight:700; margin-bottom:8px; color:var(--white);">Institutions publiques</div>
       <div class="problem-desc">CRI, ANAPEC, ONEE, ONCF — qui coordonnent des écosystèmes d'acteurs économiques et institutionnels.</div>
     </div>
-    <div class="problem-card purple reveal" style="border-radius:16px; padding:28px;">
+    <div class="problem-card purple reveal persona-card" data-persona="corporate" style="border-radius:16px; padding:28px;">
       <div class="problem-stat" style="font-size:1.8rem;"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
       <div style="font-weight:700; margin-bottom:8px; color:var(--white);">Universités &amp; grandes écoles</div>
       <div class="problem-desc">UMI, UM5, ENCG, ISCAE — licence institutionnelle pédagogique : 5 000 à 15 000 MAD/an par établissement.</div>
@@ -657,7 +704,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
         </div>
         <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
           <a href="https://stakeholders26.shinyapps.io/stakenexus/" target="_blank" class="sw-chip">↗ Plateforme</a>
-          <a href="mailto:contact@stakenexus.ma" class="sw-chip">✉ Support</a>
+          <a href="mailto:assiya.chawki@gmail.com" class="sw-chip">✉ Support</a>
           <a href="#contact" class="sw-chip">▶ Contact</a>
         </div>
       </div>
@@ -687,7 +734,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
         <div class="founder-pos"><div class="founder-pos-dot"></div>Spécialiste Parties Prenantes · Rabat / Rabat / Rabat / Meknès, Maroc</div>
         <div>
           <a href="https://www.linkedin.com/in/assiya-chawki" target="_blank" class="founder-social">in LinkedIn</a>
-          <a href="mailto:contact@stakenexus.ma" class="founder-social">✉ Email</a>
+          <a href="mailto:assiya.chawki@gmail.com" class="founder-social">✉ Email</a>
           <a href="#contact" class="founder-social">◎ Contact</a>
         </div>
       </div>
@@ -807,7 +854,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
         <div class="pricing-feature"><div class="pricing-check">✓</div>Traffic Light &amp; Alertes</div>
         <div class="pricing-feature"><div class="pricing-check">✓</div>Export Excel / CSV</div>
         <div class="pricing-feature"><div class="pricing-check">✓</div>Support email</div>
-        <a href="#contact" class="pricing-cta">Démarrer — 14 jours gratuits</a>
+        <a href="https://stakeholders26.shinyapps.io/stakenexus" target="_blank" class="pricing-cta">Demander un accès pilote →</a>
       </div>
       <div class="pricing-card featured reveal">
         <div class="pricing-badge">Le plus populaire</div>
@@ -843,6 +890,10 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
   <div class="section-tag reveal">Contact</div>
   <h2 class="section-title reveal">Parlons de votre projet.</h2>
   <p class="section-subtitle reveal">Démo gratuite, devis personnalisé ou simple question — nous répondons sous 24h.</p>
+  <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:8px 16px;font-size:0.78rem;color:#F59E0B;margin-bottom:32px;">
+    <span>⚡</span>
+    <span>Adresse email professionnelle <strong>contact@stakenexus.ma</strong> en cours de déploiement — utilisez le formulaire ci-dessous pour nous joindre directement.</span>
+  </div>
   <div class="contact-grid">
     <div class="contact-info reveal">
       <div class="contact-card">
@@ -850,7 +901,8 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
         <div>
           <div class="contact-card-title">Email direct</div>
           <div class="contact-card-desc">Pour toute demande de démo, devis ou partenariat strategique.</div>
-          <a href="mailto:contact@stakenexus.ma" class="contact-card-link">contact@stakenexus.ma →</a>
+          <a href="mailto:assiya.chawki@gmail.com" class="contact-card-link">Envoyer un email →</a>
+          <div style="font-size:0.72rem;color:#334155;margin-top:4px;">📧 assiya.chawki@gmail.com · Email pro en cours de déploiement</div>
         </div>
       </div>
       <div class="contact-card">
@@ -866,7 +918,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
         <div>
           <div class="contact-card-title">Institutions & Grands Comptes</div>
           <div class="contact-card-desc">OCP, banques, ministeres, CRI — nous concevons une solution sur mesure pour votre ecosysteme.</div>
-          <a href="mailto:contact@stakenexus.ma?subject=Demande%20Entreprise%20StakeNexus" class="contact-card-link">Demande entreprise →</a>
+          <a href="mailto:assiya.chawki@gmail.com?subject=Demande%20Entreprise%20StakeNexus" class="contact-card-link">Demande entreprise →</a>
         </div>
       </div>
       <div class="contact-card">
@@ -914,52 +966,40 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
   <div class="testimonies-grid">
 
     <div class="testimony-card reveal">
-      
+      <div class="testimony-stars"><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span></div>
+      <p class="testimony-text">« StakeNexus apporte une lecture plus mature des relations d'acteurs. L'intérêt n'est pas seulement analytique, il devient immédiatement décisionnel. »</p>
+      <div class="testimony-author">
+        <div class="testimony-avatar" style="background:linear-gradient(135deg,#7C3AED,#5B21B6);">DP</div>
+        <div>
+          <div class="testimony-name">Direction de projet</div>
+          <div class="testimony-role">Grand programme institutionnel</div>
+          <div class="testimony-org">Identité confidentielle</div>
+        </div>
       </div>
-      <div class="testimony-revealed-content" style="display:none;">
-        <div class="testimony-stars"><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span></div>
-        <p class="testimony-text">« StakeNexus apporte une lecture plus mature des relations d'acteurs. L'intérêt n'est pas seulement analytique, il devient immédiatement décisionnel. »</p>
-        <div class="testimony-author">
-          <div class="testimony-avatar" style="background:linear-gradient(135deg,#7C3AED,#5B21B6);">●●</div>
-          <div>
-            <div class="testimony-name">Direction de projet</div>
-            <div class="testimony-role">Grand programme institutionnel</div>
-            <div class="testimony-org">Identité confidentielle</div>
-          </div>
+    </div>
+
+    <div class="testimony-card reveal" style="border-color:rgba(124,58,237,0.45);background:linear-gradient(135deg,rgba(124,58,237,0.07),var(--dark2));">
+      <div class="testimony-stars"><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span></div>
+      <p class="testimony-text">« Ask Nexus nous a permis d'anticiper une rupture relationnelle clé, trois semaines avant qu'elle ne se concrétise. C'est une valeur ajoutée difficile à quantifier mais impossible à ignorer. »</p>
+      <div class="testimony-author">
+        <div class="testimony-avatar" style="background:linear-gradient(135deg,#06B6D4,#0284C7);">DS</div>
+        <div>
+          <div class="testimony-name">Direction stratégique</div>
+          <div class="testimony-role">Établissement financier</div>
+          <div class="testimony-org">Identité confidentielle</div>
         </div>
       </div>
     </div>
 
     <div class="testimony-card reveal">
-      
-      </div>
-      <div class="testimony-revealed-content" style="display:none;">
-        <div class="testimony-stars"><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span></div>
-        <p class="testimony-text">« La fonctionnalité Ask Nexus nous a permis d'anticiper une rupture relationnelle clé, trois semaines avant qu'elle ne se concrétise. C'est une valeur ajoutée difficile à quantifier mais impossible à ignorer. »</p>
-        <div class="testimony-author">
-          <div class="testimony-avatar" style="background:linear-gradient(135deg,#06B6D4,#0284C7);">●●</div>
-          <div>
-            <div class="testimony-name">Direction stratégique</div>
-            <div class="testimony-role">Établissement financier</div>
-            <div class="testimony-org">Identité confidentielle</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="testimony-card reveal">
-      
-      </div>
-      <div class="testimony-revealed-content" style="display:none;">
-        <div class="testimony-stars"><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span></div>
-        <p class="testimony-text">« Enfin un outil souverain. Nos données stratégiques restent au Maroc — c'est non-négociable pour nous. Le niveau de rigueur scientifique de StakeNexus est sans équivalent dans l'offre disponible sur le marché africain. »</p>
-        <div class="testimony-author">
-          <div class="testimony-avatar" style="background:linear-gradient(135deg,#10B981,#059669);">●●</div>
-          <div>
-            <div class="testimony-name">Direction générale</div>
-            <div class="testimony-role">Groupe industriel, Maroc</div>
-            <div class="testimony-org">Identité confidentielle</div>
-          </div>
+      <div class="testimony-stars"><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span><span class="testimony-star">★</span></div>
+      <p class="testimony-text">« Enfin un outil souverain. Nos données stratégiques restent au Maroc — c'est non-négociable pour nous. Le niveau de rigueur scientifique de StakeNexus est sans équivalent dans l'offre disponible sur le marché africain. »</p>
+      <div class="testimony-author">
+        <div class="testimony-avatar" style="background:linear-gradient(135deg,#10B981,#059669);">DG</div>
+        <div>
+          <div class="testimony-name">Direction générale</div>
+          <div class="testimony-role">Groupe industriel, Maroc</div>
+          <div class="testimony-org">Identité confidentielle</div>
         </div>
       </div>
     </div>
@@ -986,7 +1026,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
   <div class="footer-logo">StakeNexus</div>
   <div class="footer-text">© 2026 Assiya Chawki. Tous droits réservés. · Rabat / Rabat / Rabat / Meknès, Maroc</div>
   <div class="footer-links">
-    <a href="mailto:contact@stakenexus.ma">Contact</a>
+    <a href="mailto:assiya.chawki@gmail.com">Contact</a>
     <a href="https://stakeholders26.shinyapps.io/stakenexus/" target="_blank">Plateforme</a>
     <a href="#about">À Propos</a>
   </div>
@@ -1124,6 +1164,20 @@ function revealTestimony(card) {
   document.getElementById('pricing-modal-overlay').addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('open');
   });
+
+  
+  function filterPersona(persona) {
+    document.querySelectorAll('.persona-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.persona === persona);
+    });
+    document.querySelectorAll('.persona-card').forEach(card => {
+      if (persona === 'all' || card.dataset.persona === persona) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
 
   </script>
 
