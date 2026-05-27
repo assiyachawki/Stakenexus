@@ -55,6 +55,12 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   from { filter: drop-shadow(0 0 8px rgba(30,200,255,0.35)) drop-shadow(0 0 20px rgba(212,160,20,0.25)); }
   to   { filter: drop-shadow(0 0 18px rgba(30,200,255,0.65)) drop-shadow(0 0 36px rgba(212,160,20,0.5)); }
 }
+  .hero-logo {
+  height: 100px;
+  width: auto;
+  margin-bottom: 24px;
+  display: block;
+}
 .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
 .nav-links a { text-decoration: none; color: var(--gray); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--white); }
@@ -492,6 +498,9 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
+    <div class="hero-content">
+    <img src="logo-stakenexus.png" alt="Logo StakeNexus" class="hero-logo">
+    <div class="hero-badge">1ère plateforme...
     <div class="hero-badge">1ère plateforme d'intelligence relationnelle — 100% marocaine</div>
     <h1 class="hero-title">Sécurisez<br><span class="accent">vos relations</span><br>stratégiques.</h1>
     <p class="hero-subtitle">Vos relations stratégiques sont votre actif le plus fragile. StakeNexus est la <strong>première plateforme marocaine</strong> qui cartographie, score et prescrit les actions exactes pour sécuriser votre écosystème — avant que les crises ne coûtent des millions de dirhams.</p>
