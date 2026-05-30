@@ -1256,7 +1256,8 @@ function revealTestimony(card) {
 }
 
 
-  function toggleMobileMenu() {
+  function toggleMobileMenu(e) {
+    e.stopPropagation();
     const nav = document.querySelector('.nav-links');
     const btn = document.getElementById('nav-hamburger');
     nav.classList.toggle('mobile-open');
