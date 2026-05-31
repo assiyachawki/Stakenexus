@@ -1197,6 +1197,13 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
+    // Fermer menu mobile si ouvert
+    const nav = document.querySelector('.nav-links');
+    const btn = document.getElementById('nav-hamburger');
+    if (nav && nav.classList.contains('mobile-open')) {
+      nav.classList.remove('mobile-open');
+      if (btn) btn.classList.remove('open');
+    }
     const target = document.querySelector(a.getAttribute('href'));
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
@@ -1256,13 +1263,47 @@ function revealTestimony(card) {
 }
 
 
-  function toggleMobileMenu(e) {
-    e.stopPropagation();
-    const nav = document.querySelector('.nav-links');
-    const btn = document.getElementById('nav-hamburger');
-    nav.classList.toggle('mobile-open');
-    btn.classList.toggle('open');
-  }
+  // Menu mobile — robuste mobile/tactile
+  (function() {
+    var menuOpen = false;
+    var hamburger = null;
+    var navLinks = null;
+
+    function setupMenu() {
+      hamburger = document.getElementById('nav-hamburger');
+      navLinks = document.querySelector('.nav-links');
+      if (!hamburger || !navLinks) return;
+
+      hamburger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        menuOpen = !menuOpen;
+        if (menuOpen) {
+          navLinks.classList.add('mobile-open');
+          hamburger.classList.add('open');
+        } else {
+          navLinks.classList.remove('mobile-open');
+          hamburger.classList.remove('open');
+        }
+      }, { passive: false });
+
+      document.addEventListener('click', function(e) {
+        if (menuOpen && !navLinks.contains(e.target) && e.target !== hamburger && !hamburger.contains(e.target)) {
+          menuOpen = false;
+          navLinks.classList.remove('mobile-open');
+          hamburger.classList.remove('open');
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupMenu);
+    } else {
+      setupMenu();
+    }
+  })();
+
+  function toggleMobileMenu(e) { /* géré ci-dessus */ }
 
   function unlockPricing(e) {
     e.preventDefault();
