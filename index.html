@@ -158,6 +158,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .nav-links a:hover { color: var(--white); }
 .nav-cta { background: var(--purple) !important; color: white !important; padding: 9px 22px; border-radius: 8px; font-weight: 600; }
 .nav-cta:hover { background: #6D28D9 !important; transform: translateY(-1px); }
+#lang-toggle:hover { background: rgba(6,182,212,0.25); transform: translateY(-1px); }
 
 /* SECTIONS */
 section { position: relative; z-index: 1; }
@@ -662,7 +663,9 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
     <li><a href="#testimonies">Témoignages</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="https://stakeholders26.shinyapps.io/stakenexus/" target="_blank" class="nav-cta">Démo gratuite</a></li>
-  </ul>
+    <li>
+      <button id="lang-toggle" onclick="toggleLang()" aria-label="Switch language" style="background:rgba(6,182,212,0.12);border:1px solid rgba(6,182,212,0.4);color:var(--cyan);font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all 0.2s;white-space:nowrap;">EN</button>
+    </li>
 </nav>
 
 <!-- HERO -->
@@ -1346,7 +1349,7 @@ footer { border-top: 1px solid var(--border); padding: 40px 60px; display: flex;
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">StakeNexus</div>
-  <div class="footer-text">© 2026 Assiya Chawki. Tous droits réservés. · Rabat / Rabat / Rabat / Meknès, Maroc</div>
+  <div class="footer-text">© 2026 Assiya Chawki. Tous droits réservés. · Rabat · Meknès, Maroc</div>
   <div class="footer-links">
     <a href="https://mail.google.com/mail/?view=cm&to=contact@stakenexus.ma" target="_blank" rel="noopener">Contact</a>
     <a href="https://stakeholders26.shinyapps.io/stakenexus/" target="_blank">Plateforme</a>
@@ -1502,6 +1505,263 @@ function revealTestimony(card) {
 
   function toggleMobileMenu(e) { /* géré ci-dessus */ }
 
+  // =====================================================================
+  // LANGUE FR / EN
+  // =====================================================================
+  const TRANSLATIONS = {
+    fr: {
+      // NAV
+      'nav-solution': 'Solution',
+      'nav-offer': 'Offre de conseil',
+      'nav-targets': 'Cibles',
+      'nav-partnerships': 'Partenariats',
+      'nav-science': 'La Science',
+      'nav-about': 'À Propos',
+      'nav-pricing': 'Tarifs',
+      'nav-testimonies': 'Témoignages',
+      'nav-contact': 'Contact',
+      'nav-demo': 'Démo gratuite',
+      // HERO badge
+      'hero-badge': '1ère plateforme d\'intelligence relationnelle & gestion des parties prenantes — 100% marocaine',
+      'hero-title1': 'Vos relations stratégiques sont',
+      'hero-accent': 'votre actif',
+      'hero-title2': 'le plus fragile.',
+      'hero-subtitle': 'StakeNexus est la <strong>première plateforme marocaine</strong> qui cartographie, score et prescrit les actions exactes pour sécuriser votre écosystème — avant que les crises ne coûtent des millions.',
+      'hero-cta': 'Demander une Démo →',
+      'hero-reassurance': 'Réponse sous 24h — Sans engagement',
+      'hero-traction-status': 'Phase pilote active — 2026',
+      'hero-traction-orgs': 'organisations pilotes',
+      'hero-traction-diag': 'diagnostics réalisés',
+      'hero-traction-conf': 'hypothèses confirmées',
+      'hero-traction-cta': 'Demander une Démo →',
+      // PROBLEM section
+      'problem-tag': 'Le Problème',
+      'problem-title': 'Les institutions marocaines perdent<br>des millions de dirhams en silence.',
+      'problem-subtitle': 'La cause principale n\'est pas technique. C\'est relationnelle.',
+      'problem-stat1-desc': 'des entreprises marocaines disparaissent dans les 3 premières années d\'existence à cause d\'une mauvaise gestion des parties prenantes.',
+      'problem-stat1-source': 'Source :',
+      'problem-stat2-desc': 'des faillites d\'entreprises sont dues à une mauvaise gestion et à l\'absence d\'intelligence stratégique sur l\'environnement relationnel.',
+      'problem-stat2-source': 'Source :',
+      'problem-stat3-val': 'ZÉRO',
+      'problem-stat3-desc': 'outil local dédié à l\'intelligence stratégique des parties prenantes en Afrique francophone. Jusqu\'à aujourd\'hui.',
+      'problem-stat3-source': 'Analyse concurrentielle StakeNexus 2026',
+      // TARGETS section
+      'targets-tag': 'Cibles prioritaires',
+      'targets-title1': 'StakeNexus parle',
+      'targets-title2': 'votre langage.',
+      'targets-subtitle': 'Sélectionnez votre profil pour voir comment StakeNexus répond à vos enjeux spécifiques.',
+      'persona-all': 'Toutes les organisations',
+      'persona-pme': 'PME & ETI',
+      'persona-corporate': 'Grandes entreprises',
+      'persona-public': 'Institutions publiques',
+      'persona-academic': 'Universités & Écoles',
+      'persona-conseil': 'Cabinets de conseil',
+      'persona-cta-purple': 'Voir comment StakeNexus vous aide →',
+      // SOLUTION section
+      'solution-tag': 'La Solution',
+      'solution-title': 'StakeNexus transforme vos donnees<br>relationnelles en decisions strategiques.',
+      'solution-subtitle': 'Pas un tableau de bord de plus. Un moteur de prescription stratégique basé sur la recherche scientifique marocaine.',
+      'solution-cta': 'Demander une démonstration gratuite →',
+      // FOOTER
+      'footer-copyright': '© 2026 Assiya Chawki. Tous droits réservés. · Rabat · Meknès, Maroc',
+      'footer-contact': 'Contact',
+      'footer-platform': 'Plateforme',
+      'footer-about': 'À Propos',
+      // PRICING modal
+      'pricing-modal-title': 'Votre grille tarifaire',
+      'pricing-modal-subtitle': 'en 30 secondes',
+      'pricing-modal-desc': 'Entrez votre email professionnel pour recevoir instantanément la grille tarifaire complète StakeNexus (Pro & Enterprise) avec les options sur mesure.',
+      'pricing-modal-placeholder-email': 'contact@votre-organisation.ma',
+      'pricing-modal-placeholder-org': 'Nom de votre organisation',
+      'pricing-modal-btn': 'Recevoir ma grille tarifaire →',
+      'pricing-modal-legal': 'Aucun spam. Réponse sous 24h maximum.',
+      // MOBILE CTA
+      'mobile-cta': '🚀 Demander une Démo',
+    },
+    en: {
+      // NAV
+      'nav-solution': 'Solution',
+      'nav-offer': 'Consulting',
+      'nav-targets': 'Targets',
+      'nav-partnerships': 'Partnerships',
+      'nav-science': 'The Science',
+      'nav-about': 'About',
+      'nav-pricing': 'Pricing',
+      'nav-testimonies': 'Testimonials',
+      'nav-contact': 'Contact',
+      'nav-demo': 'Free Demo',
+      // HERO badge
+      'hero-badge': '1st strategic intelligence & stakeholder management platform — 100% Moroccan',
+      'hero-title1': 'Your strategic relationships are',
+      'hero-accent': 'your most fragile',
+      'hero-title2': 'asset.',
+      'hero-subtitle': 'StakeNexus is the <strong>first Moroccan platform</strong> that maps, scores and prescribes the exact actions to secure your ecosystem — before crises cost millions.',
+      'hero-cta': 'Request a Demo →',
+      'hero-reassurance': 'Response within 24h — No commitment',
+      'hero-traction-status': 'Active pilot phase — 2026',
+      'hero-traction-orgs': 'pilot organisations',
+      'hero-traction-diag': 'diagnostics completed',
+      'hero-traction-conf': 'hypotheses confirmed',
+      'hero-traction-cta': 'Request a Demo →',
+      // PROBLEM
+      'problem-tag': 'The Problem',
+      'problem-title': 'Moroccan institutions silently<br>lose millions of dirhams.',
+      'problem-subtitle': 'The root cause is not technical. It\'s relational.',
+      'problem-stat1-desc': 'of Moroccan companies disappear within the first 3 years of existence due to poor stakeholder management.',
+      'problem-stat1-source': 'Source:',
+      'problem-stat2-desc': 'of business failures are due to poor management and lack of strategic intelligence on the relational environment.',
+      'problem-stat2-source': 'Source:',
+      'problem-stat3-val': 'ZERO',
+      'problem-stat3-desc': 'local tool dedicated to strategic stakeholder intelligence in francophone Africa. Until today.',
+      'problem-stat3-source': 'StakeNexus Competitive Analysis 2026',
+      // TARGETS
+      'targets-tag': 'Priority Targets',
+      'targets-title1': 'StakeNexus speaks',
+      'targets-title2': 'your language.',
+      'targets-subtitle': 'Select your profile to see how StakeNexus addresses your specific challenges.',
+      'persona-all': 'All organisations',
+      'persona-pme': 'SMEs & Mid-caps',
+      'persona-corporate': 'Large corporations',
+      'persona-public': 'Public institutions',
+      'persona-academic': 'Universities & Schools',
+      'persona-conseil': 'Consulting firms',
+      'persona-cta-purple': 'See how StakeNexus helps you →',
+      // SOLUTION
+      'solution-tag': 'The Solution',
+      'solution-title': 'StakeNexus turns your relational<br>data into strategic decisions.',
+      'solution-subtitle': 'Not just another dashboard. A strategic prescription engine based on Moroccan scientific research.',
+      'solution-cta': 'Request a free demonstration →',
+      // FOOTER
+      'footer-copyright': '© 2026 Assiya Chawki. All rights reserved. · Rabat · Meknès, Morocco',
+      'footer-contact': 'Contact',
+      'footer-platform': 'Platform',
+      'footer-about': 'About',
+      // PRICING modal
+      'pricing-modal-title': 'Your pricing grid',
+      'pricing-modal-subtitle': 'in 30 seconds',
+      'pricing-modal-desc': 'Enter your professional email to instantly receive the full StakeNexus pricing grid (Pro & Enterprise) with custom options.',
+      'pricing-modal-placeholder-email': 'contact@your-organisation.com',
+      'pricing-modal-placeholder-org': 'Your organisation name',
+      'pricing-modal-btn': 'Receive my pricing grid →',
+      'pricing-modal-legal': 'No spam. Response within 24h maximum.',
+      // MOBILE CTA
+      'mobile-cta': '🚀 Request a Demo',
+    }
+  };
+
+  let currentLang = 'fr';
+
+  function t(key) {
+    return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) || key;
+  }
+
+  function applyTranslations() {
+    const lang = currentLang;
+
+    // NAV links
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navKeys = ['nav-solution','nav-offer','nav-targets','nav-partnerships','nav-science','nav-about','nav-pricing','nav-testimonies','nav-contact'];
+    navLinks.forEach((a, i) => {
+      if (navKeys[i] && !a.classList.contains('nav-cta')) a.textContent = t(navKeys[i]);
+      if (a.classList.contains('nav-cta')) a.textContent = t('nav-demo');
+    });
+
+    // HERO badge
+    const badge = document.querySelector('.hero-badge');
+    if (badge) badge.innerHTML = `<span style="width:7px;height:7px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);animation:pulse 2s infinite;display:inline-block;margin-right:8px;"></span>${t('hero-badge')}`;
+
+    // HERO title
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) heroTitle.innerHTML = `${t('hero-title1')}<br><span class="accent">${t('hero-accent')}</span><br>${t('hero-title2')}`;
+
+    // HERO subtitle
+    const heroSub = document.querySelector('.hero-subtitle');
+    if (heroSub) heroSub.innerHTML = t('hero-subtitle');
+
+    // HERO CTA
+    const heroCta = document.querySelector('.hero-actions .btn-primary');
+    if (heroCta) heroCta.textContent = t('hero-cta');
+
+    // HERO reassurance text
+    const heroReassurance = document.querySelector('.hero-left > p[style*="A7F3D0"]');
+    if (heroReassurance) heroReassurance.textContent = t('hero-reassurance');
+
+    // TRACTION band
+    const tractionStatus = document.querySelector('.traction-band span[style*="10B981"][style*="letter-spacing"]');
+    if (tractionStatus) tractionStatus.textContent = t('hero-traction-status');
+    const tractionSpans = document.querySelectorAll('.traction-band span[style*="gray"]');
+    const tractionKeys = ['hero-traction-orgs','hero-traction-diag','hero-traction-conf'];
+    tractionSpans.forEach((sp, i) => { if(tractionKeys[i]) sp.textContent = t(tractionKeys[i]); });
+    const tractionCta = document.querySelector('.traction-band a');
+    if (tractionCta) tractionCta.textContent = t('hero-traction-cta');
+
+    // PROBLEM section
+    const probTag = document.querySelector('#problem .section-tag');
+    if (probTag) probTag.textContent = t('problem-tag');
+    const probTitle = document.querySelector('#problem .section-title');
+    if (probTitle) probTitle.innerHTML = t('problem-title');
+    const probSub = document.querySelector('#problem .section-subtitle');
+    if (probSub) probSub.textContent = t('problem-subtitle');
+
+    // TARGETS section
+    const targTag = document.querySelector('#targets .section-tag');
+    if (targTag) targTag.textContent = t('targets-tag');
+    const targTitle = document.querySelector('#targets .section-title');
+    if (targTitle) targTitle.innerHTML = `${t('targets-title1')}<br><span class="accent">${t('targets-title2')}</span>`;
+    const targSub = document.querySelector('#targets .section-subtitle');
+    if (targSub) targSub.textContent = t('targets-subtitle');
+    const personaBtns = document.querySelectorAll('.persona-btn');
+    const personaKeys = ['persona-all','persona-pme','persona-corporate','persona-public','persona-academic','persona-conseil'];
+    personaBtns.forEach((btn, i) => { if(personaKeys[i]) btn.textContent = t(personaKeys[i]); });
+
+    // SOLUTION section
+    const solTag = document.querySelector('.solution-section .section-tag');
+    if (solTag) solTag.textContent = t('solution-tag');
+    const solTitle = document.querySelector('.solution-section .section-title');
+    if (solTitle) solTitle.innerHTML = t('solution-title');
+    const solSub = document.querySelector('.solution-section .section-subtitle');
+    if (solSub) solSub.textContent = t('solution-subtitle');
+    const solCta = document.querySelector('.solution-section .btn-primary');
+    if (solCta) solCta.innerHTML = t('solution-cta');
+
+    // FOOTER
+    const footerText = document.querySelector('.footer-text');
+    if (footerText) footerText.textContent = t('footer-copyright');
+    const footerLinks = document.querySelectorAll('.footer-links a');
+    const footerKeys = ['footer-contact','footer-platform','footer-about'];
+    footerLinks.forEach((a, i) => { if(footerKeys[i]) a.textContent = t(footerKeys[i]); });
+
+    // PRICING MODAL
+    const pmTitle = document.querySelector('.pricing-modal h3');
+    if (pmTitle) pmTitle.innerHTML = `${t('pricing-modal-title')}<br><span style="color:var(--purple)">${t('pricing-modal-subtitle')}</span>`;
+    const pmDesc = document.querySelector('.pricing-modal p');
+    if (pmDesc) pmDesc.textContent = t('pricing-modal-desc');
+    const pmEmail = document.getElementById('modal-email');
+    if (pmEmail) pmEmail.placeholder = t('pricing-modal-placeholder-email');
+    const pmOrg = document.getElementById('modal-org');
+    if (pmOrg) pmOrg.placeholder = t('pricing-modal-placeholder-org');
+    const pmBtn = document.querySelector('.pricing-modal-btn');
+    if (pmBtn && !pmBtn.disabled) pmBtn.textContent = t('pricing-modal-btn');
+    const pmLegal = document.querySelector('.pricing-modal p:last-child');
+    if (pmLegal) pmLegal.textContent = t('pricing-modal-legal');
+
+    // MOBILE CTA
+    const mobileCta = document.querySelector('.mobile-floating-btn');
+    if (mobileCta) mobileCta.textContent = t('mobile-cta');
+
+    // LANG TOGGLE BUTTON
+    const btn = document.getElementById('lang-toggle');
+    if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+
+    // HTML lang attribute
+    document.documentElement.lang = lang;
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    applyTranslations();
+  }
+
   function unlockPricing(e) {
     e.preventDefault();
     document.getElementById('pricing-modal-overlay').classList.add('open');
@@ -1515,13 +1775,34 @@ function revealTestimony(card) {
       return;
     }
     const btn = document.querySelector('.pricing-modal-btn');
-    btn.textContent = '✓ Envoyé — vérifiez votre boite mail !';
-    btn.style.background = '#10B981';
-    setTimeout(() => {
-      document.getElementById('pricing-modal-overlay').classList.remove('open');
-      btn.textContent = 'Recevoir ma grille tarifaire →';
-      btn.style.background = '';
-    }, 3000);
+    btn.textContent = 'Envoi en cours…';
+    btn.disabled = true;
+    const data = new FormData();
+    data.append('email', email);
+    data.append('organisation', org);
+    data.append('_subject', 'Demande grille tarifaire StakeNexus');
+    fetch('https://formspree.io/f/xeenpapq', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        btn.textContent = '✓ Envoyé — vérifiez votre boite mail !';
+        btn.style.background = '#10B981';
+        setTimeout(() => {
+          document.getElementById('pricing-modal-overlay').classList.remove('open');
+          btn.textContent = 'Recevoir ma grille tarifaire →';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 3000);
+      } else {
+        btn.textContent = 'Erreur — Réessayer';
+        btn.disabled = false;
+      }
+    }).catch(() => {
+      btn.textContent = 'Erreur — Réessayer';
+      btn.disabled = false;
+    });
   }
 
   // Close modal on overlay click
